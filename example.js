@@ -6,23 +6,40 @@ var ballY;
 var ballRadius;
 var ballXVelocity;
 var ballGrowth;
+var xspeed = 2.8; // Speed of the shape
+var yspeed = 2.2; // Speed of the shape
+var rad = 60;
+var xdirection = 1; // Left or Right
+var ydirection = 1; // Top to Bottom
+
 
 // initialize global variables in setup() function
 function setup() {
   p5Canvas = createCanvas(800, 600);
   p5Canvas.parent("#p5-canvas");
   myName = select("#my-name");
-  myName.html("Teacher");
-  ballX = width / 2;
-  ballY = height / 2;
+  myName.html("Karell");
+  ballX = width / 10;
+  ballY = height / 5;
   ballRadius = 50;
-  ballXVelocity = 10;
-  ballGrowth = 10;
+  ballXVelocity = 40;
+  ballGrowth = 20;
 }
 
 
 function draw() {
   background(0, 255, 0);
+  ballX = ballX + xspeed * xdirection;
+  ballY = ballY + yspeed * ydirection;
+
+  // Test to see if the shape exceeds the boundaries of the screen
+  // If it does, reverse its direction by multiplying by -1
+  if (ballX > width - rad || ballX < rad) {
+    xdirection *= -1;
+  }
+  if (ballY > height - rad || ballY < rad) {
+    ydirection *= -1;
+  }
   //drawSquares(random(30, 60)); // Uncomment this line for some fun!
   drawBall();
 }
@@ -32,13 +49,13 @@ function drawBall() {
     ballXVelocity *= -1;
   }
   var circumference = getCircumference(); // local variable
-  if(circumference >= 600 || circumference <= 160) {
-    ballGrowth *= -1;
+  if(circumference >= 0 || circumference <= 160) {
+    ballGrowth *= 10;
   }
   ballX += ballXVelocity;
   //ballRadius += ballGrowth; // Uncomment this line for a "pulsing" effect!
   var ballDiameter = ballRadius * 2; // local variable
-  fill("orange");
+  fill("randomBlue");
   ellipse(ballX, ballY, ballDiameter, ballDiameter);
 }
 
